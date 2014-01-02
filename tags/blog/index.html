@@ -1,0 +1,248 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>blog | 大树小屋技术版</title>
+  <meta name="author" content="Wang Shuyi">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="大树小屋技术版"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="大树小屋技术版" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">大树小屋技术版</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title tag">blog</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-01-01T12:59:38.000Z"><a href="/2014/01/01/20140101multiplehexogithubaccountmanagement/">Jan 1 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/01/01/20140101multiplehexogithubaccountmanagement/">Hexo blog 建立流程全记录</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>这个教程主要是讲如何在一个机器上面利用多个github 账号建立多个不同的 hexo blog，让它们之间相互不影响。可以让平时需要记录的信息产生分流。</p>
+<h2>安装hexo</h2>
+<p>从略，因为hexo自身的教程写得太清楚了，重复起来没有意思。</p>
+<h2>申请一个Gmail</h2>
+<p>当然，可以申请任何邮箱。但是gmail的好处不必多说。而且不像原先控制那么严格，Gmail几乎可以随便申请了。中间需要填写一个手机号码，我4个邮箱用的1个手机号码。只有最后一次要求我短信验证。</p>
+<p>为了后面叙述方便，假设邮箱账号设置为 myaccount1 吧。</p>
+<h2>申请一个 github</h2>
+<p>如果运气好的话，github上面的账号名称可以和gmail相同，那样就好办多了。</p>
+<p>申请成功之后，创建一个repo，repo的名字一定要取 myaccount1.github.com，然后记得要把页面上面对应的ssh地址拷贝下来备用。</p>
+<pre><code><span class="label">https:</span>//github<span class="preprocessor">.com</span>/myaccount1/myaccount1<span class="preprocessor">.github</span><span class="preprocessor">.com</span><span class="preprocessor">.git</span></code></pre>
+<h2>建立ssh key</h2>
+<pre><code><span class="title">cd</span> ~/.ssh
+ssh-keygen -t rsa -C <span class="string">'myaccount1<span class="variable">@gmail</span>.com'</span></code></pre>
+<p>注意生成的文件名称不要用默认的 <code>~/.ssh/id_rsa</code>，改成 <code>id_rsa_myaccount1</code>，之后 .ssh目录下面就会出现两个新的文件，一个叫做 <code>id_rsa_myaccount1</code>， 另一个叫做 <code>id_rsa_myaccount1.pub</code></p>
+<p>执行</p>
+<pre><code><span class="title">ssh</span>-add id_rsa_myaccount1</code></pre>
+<p>然后打开 <code>id_rsa_myaccount1.pub</code></p>
+<p>把其中的全部内容复制，上 github，在 account setting 里面添加 ssh key</p>
+<p>名字一栏随便填写，就是个记号， 例如可以叫做 myaccount1 on win 等。</p>
+<p>然后内容里面把剪贴板里面的东西粘贴进来。保存。</p>
+<p>在 ~/.ssh 目录下面新建/修改 config 文件</p>
+<p>追加以下内容</p>
+<pre><code><span class="comment"># comment blablabla (myaccount1<span class="yardoctag">@gmail</span>.com)</span>
+<span class="constant">Host</span> github-myaccount1
+<span class="constant">HostName</span> github.com 
+<span class="constant">User</span> git 
+<span class="constant">IdentityFile</span> ~<span class="regexp">/.ssh/id</span>_rsa_myaccount1</code></pre>
+<p>保存</p>
+<h2>hexo blog 建立</h2>
+<p>创建一个目录，我喜欢在 blog 目录下面新建 myaccount1目录。这样既便于集中管理，同时又可以清晰对比，分门别类。</p>
+<p>进入 blog/myaccount1，执行</p>
+<pre><code><span class="title">hexo</span> init</code></pre>
+<p>然后修改 <code>_config.yml</code> 的最后 deploy 部分，</p>
+<p>改为</p>
+<pre><code><span class="method">deploy:</span>
+  <span class="method">type:</span> github
+  <span class="method">repository:</span> git@github-<span class="method">myaccount1:</span>myaccount1/myaccount1.github.com.git
+  <span class="method">branch:</span> master</code></pre>
+<p>尤其注意第三行中的</p>
+<pre><code><span class="attribute">github-myaccount1</code></pre>
+<p>原先从github当中保留下来的ssh地址应该是</p>
+<pre><code>git@github<span class="variable">.com</span>:myaccount1/myaccount1<span class="variable">.github</span><span class="variable">.com</span><span class="variable">.git</span></code></pre>
+<p>但是由于在本机上面有多个github账号，因此必须予以区别，原先github.com的写法就不能要了，代之以在 ~/.ssh/config 中进行的重命名。</p>
+<h2>测试</h2>
+<p>修改 <code>_config.yml</code> 中的博客名称和作者等必要信息</p>
+<p>执行</p>
+<pre><code><span class="title">hexo</span> g
+<span class="title">hexo</span> d</code></pre>
+<p>成功。</p>
+<p>注意第一次生成博客需要等10分钟，心急吃不了热豆腐。 :-P</p>
+<h2>后续工作</h2>
+<p>这样做有个问题，就是占用了许多免费资源。我也怕 Google 会因为长期不活跃登录，收走我的邮箱账号。虽然我觉得大公司不至于如此小气。以防万一吧。</p>
+<p>到 gmail 中，设置 -&gt; 转发。 把所有的邮件转发到自己的主邮件去。 这样一来时常会有操作。而来即便Google要收账号，肯定也得通知。可以第一时间获知，采取对策。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+
+  <nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/技术点滴/公益广告/">公益广告</a><small>1</small></li>
+  
+    <li><a href="/categories/技术点滴/">技术点滴</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/AWS/">AWS</a><small>1</small></li>
+  
+    <li><a href="/tags/Coursera/">Coursera</a><small>1</small></li>
+  
+    <li><a href="/tags/MOOC/">MOOC</a><small>1</small></li>
+  
+    <li><a href="/tags/blog/">blog</a><small>1</small></li>
+  
+    <li><a href="/tags/emacs/">emacs</a><small>1</small></li>
+  
+    <li><a href="/tags/github/">github</a><small>1</small></li>
+  
+    <li><a href="/tags/gmail/">gmail</a><small>1</small></li>
+  
+    <li><a href="/tags/gpg/">gpg</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>4</small></li>
+  
+    <li><a href="/tags/iPython/">iPython</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>2</small></li>
+  
+    <li><a href="/tags/lisp/">lisp</a><small>2</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>1</small></li>
+  
+    <li><a href="/tags/shadowsocks/">shadowsocks</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>2</small></li>
+  
+    <li><a href="/tags/windows/">windows</a><small>1</small></li>
+  
+    <li><a href="/tags/youku/">youku</a><small>1</small></li>
+  
+    <li><a href="/tags/作品/">作品</a><small>3</small></li>
+  
+    <li><a href="/tags/博客/">博客</a><small>1</small></li>
+  
+    <li><a href="/tags/尝试/">尝试</a><small>1</small></li>
+  
+    <li><a href="/tags/开放课程/">开放课程</a><small>1</small></li>
+  
+    <li><a href="/tags/技术点滴/">技术点滴</a><small>2</small></li>
+  
+    <li><a href="/tags/格式转换/">格式转换</a><small>1</small></li>
+  
+    <li><a href="/tags/科研/">科研</a><small>1</small></li>
+  
+    <li><a href="/tags/科研流程/">科研流程</a><small>1</small></li>
+  
+    <li><a href="/tags/评论/">评论</a><small>1</small></li>
+  
+    <li><a href="/tags/问题解决/">问题解决</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 Wang Shuyi
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

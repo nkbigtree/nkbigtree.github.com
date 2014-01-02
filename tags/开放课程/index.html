@@ -1,0 +1,221 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>开放课程 | 大树小屋技术版</title>
+  <meta name="author" content="Wang Shuyi">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="大树小屋技术版"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="大树小屋技术版" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">大树小屋技术版</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title tag">开放课程</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-10-09T08:10:31.000Z"><a href="/2013/10/09/2013-10-09-courserabatchdownloads/">Oct 9 2013</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/10/09/2013-10-09-courserabatchdownloads/">Coursera开放课程批量下载</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2>缘起</h2>
+<p>信息偶遇这个事情很奇妙。自从学院布置给我一门数据库双语课，我就一直如坐针毡。因为我十几年前学的数据库，那时候只讲关系型数据库，用的统一都是Microsoft SQL Server，哪里会讲什么半结构化、非结构化数据。JSON和NOSQL更是闻所未闻。翻翻现在的教材，一堆新内容。而且学的时候就是中文，冷不丁让我改成英文，我自己怎么也得先充充电不是？</p>
+<p>咨询了一下在天大教数据库课程的同学，告诉我说“First Course of Database”这本书配套网站里面有课件和视频。但是我没找着。</p>
+<p>正在我一筹莫展的时候，突然发现了coursera。其实这话说得不确切。我早就发现它了，只是并不知道它上面的课居然那么齐全，居然还有数据库的。而且教授数据库的刚好来自Stanford大学，而且就是First Course这本书的第二作者。</p>
+<p>我需要干啥？自然是先把上面所有的内容下载下来再说喽。</p>
+<p>可是谈何容易。虽然Firefox可以利用Down Them All下载全部视频，但是下载来的视频不能保持原先的结构。而且课程还有很多配套的资料，例如ppt和pdf讲义、SRT字幕等，我可不愿意一一点开下载。那是否有更好的办法能下载全部材料呢？幸好，我找到了Coursera相关的一个<a href="https://github.com/jplehmann/coursera" target="_blank">python项目</a>，能够批量下载某门课程的全部内容。</p>
+<h2>实际操作</h2>
+<p>这里只谈谈OSX上面如何操作。</p>
+<p>首先要安装一个pip，是Python相关包的一个安装程序。安装方式网站上面并没有给出。我用port安装，找不到它。其实很简单，只需要</p>
+<pre><code>su<span class="operator"><span class="keyword">do</span> easy_install pip</code></pre>
+<p>即可。</p>
+<p>之后按照网站上面的方法，进入下载解压后的程序目录，执行：</p>
+<pre><code><span class="title">pip</span> install -r requirements.txt</code></pre>
+<p>这之后就可以使用了，首先在根目录下面建立一个~/.netrc文件，用于存储用户名和密码。</p>
+<pre><code>machine coursera-dl login <span class="tag">&lt;<span class="title">your-username</span>&gt;</span> password <span class="tag">&lt;<span class="title">your-password</span>&gt;</span></code></pre>
+<p>之后查看一下，数据库这门课的名字叫做db</p>
+<p>于是执行</p>
+<pre><code><span class="string">.</span><span class="comment">/coursera</span>-<span class="comment">dl</span> <span class="literal">-</span><span class="comment">n</span> <span class="comment">~/</span>.<span class="comment">netrc</span> <span class="comment">db</code></pre>
+<p>程序自动登录、列出目录结构，并且下载全部内容了。注意，需要科学上网。 :P</p>
+<h2>增量更新</h2>
+<p>有几个Coursera课程是同步的，现在还没有全部播放完毕，所以随时可以用coursera下载工具来进行更新：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="string">.</span><span class="comment">/coursera</span>-<span class="comment">dl</span> <span class="literal">-</span><span class="comment">n</span> <span class="comment">~/</span>.<span class="comment">netrc</span> <span class="comment">chinesehistory</span>-<span class="comment">001
+</pre></td></tr></table></figure>
+
+<p>这个课程是我到目前为止最喜欢的历史课。台湾大学吕世浩教授的《中国古代历史人物——秦始皇》。每周的课程大概6-8集，每集10分钟左右。我曾经打算每天看一集，这样看完一周的内容，刚好就有新的课程可以看了。但是，我没有一次能够忍住一口气看好几集。有时甚至周六一上午就看完本周全部内容，然后热切地期盼着下一个周六的到来。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+
+  <nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/技术点滴/公益广告/">公益广告</a><small>1</small></li>
+  
+    <li><a href="/categories/技术点滴/">技术点滴</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/AWS/">AWS</a><small>1</small></li>
+  
+    <li><a href="/tags/Coursera/">Coursera</a><small>1</small></li>
+  
+    <li><a href="/tags/MOOC/">MOOC</a><small>1</small></li>
+  
+    <li><a href="/tags/blog/">blog</a><small>1</small></li>
+  
+    <li><a href="/tags/emacs/">emacs</a><small>1</small></li>
+  
+    <li><a href="/tags/github/">github</a><small>1</small></li>
+  
+    <li><a href="/tags/gmail/">gmail</a><small>1</small></li>
+  
+    <li><a href="/tags/gpg/">gpg</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>4</small></li>
+  
+    <li><a href="/tags/iPython/">iPython</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>2</small></li>
+  
+    <li><a href="/tags/lisp/">lisp</a><small>2</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>1</small></li>
+  
+    <li><a href="/tags/shadowsocks/">shadowsocks</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>2</small></li>
+  
+    <li><a href="/tags/windows/">windows</a><small>1</small></li>
+  
+    <li><a href="/tags/youku/">youku</a><small>1</small></li>
+  
+    <li><a href="/tags/作品/">作品</a><small>3</small></li>
+  
+    <li><a href="/tags/博客/">博客</a><small>1</small></li>
+  
+    <li><a href="/tags/尝试/">尝试</a><small>1</small></li>
+  
+    <li><a href="/tags/开放课程/">开放课程</a><small>1</small></li>
+  
+    <li><a href="/tags/技术点滴/">技术点滴</a><small>2</small></li>
+  
+    <li><a href="/tags/格式转换/">格式转换</a><small>1</small></li>
+  
+    <li><a href="/tags/科研/">科研</a><small>1</small></li>
+  
+    <li><a href="/tags/科研流程/">科研流程</a><small>1</small></li>
+  
+    <li><a href="/tags/评论/">评论</a><small>1</small></li>
+  
+    <li><a href="/tags/问题解决/">问题解决</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 Wang Shuyi
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

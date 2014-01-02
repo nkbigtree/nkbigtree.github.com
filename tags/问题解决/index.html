@@ -1,0 +1,243 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>问题解决 | 大树小屋技术版</title>
+  <meta name="author" content="Wang Shuyi">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="大树小屋技术版"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="大树小屋技术版" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">大树小屋技术版</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title tag">问题解决</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-10-06T23:23:40.000Z"><a href="/2013/10/07/2013-10-07hexomigrationerror/">Oct 7 2013</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/10/07/2013-10-07hexomigrationerror/">hexoMigrationError</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>导入了RSS之后，使用generate报错</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="code"><pre>/usr/local/lib/node_modules/hexo/node_modules/yamljs/bin/yaml.js:<span class="number">1298</span>
+<span class="title">tinuationIndent</span> = <span class="number">1</span> + /^\-((\s+)(.+?))?\s*$/.exec(this.currentLine)[<span class="number">2</span>].length;
+                                                                      ^
+<span class="type">TypeError</span>: <span class="type">Cannot</span> read property<span class="string"> 'length'</span> <span class="keyword">of</span> undefined
+    at <span class="type">Object</span>.<span class="type">YamlParser</span>.getNextEmbedBlock (/usr/local/lib/node_modules/hexo/node_modules/yamljs/bin/yaml.js:<span class="number">1298</span>:<span class="number">77</span>)
+    at <span class="type">Object</span>.<span class="type">YamlParser</span>.parse (/usr/local/lib/node_modules/hexo/node_modules/yamljs/bin/yaml.js:<span class="number">1170</span>:<span class="number">37</span>)
+    at <span class="type">Object</span>.<span class="type">Yaml</span>.parse (/usr/local/lib/node_modules/hexo/node_modules/yamljs/bin/yaml.js:<span class="number">240</span>:<span class="number">15</span>)
+    at <span class="type">Object</span>.<span class="type">YAML</span>.parse (/usr/local/lib/node_modules/hexo/node_modules/yamljs/bin/yaml.js:<span class="number">357</span>:<span class="number">21</span>)
+    at <span class="module"><span class="keyword">module</span>.exports <span class="container">(/<span class="title">usr</span>/<span class="title">local</span>/<span class="title">lib</span>/<span class="title">node_modules</span>/<span class="title">hexo</span>/<span class="title">lib</span>/<span class="title">util</span>/<span class="title">yfm</span>.<span class="title">js</span>:23:23)</span>
+    at /usr/local/lib/node_modules/hexo/lib/plugins/processor/post.js:85:14
+    at /usr/local/lib/node_modules/hexo/node_modules/async/lib/async.js:422:17
+    at /usr/local/lib/node_modules/hexo/node_modules/async/lib/async.js:416:17
+    at Array.forEach <span class="container">(<span class="title">native</span>)</span>
+    at _each <span class="container">(/<span class="title">usr</span>/<span class="title">local</span>/<span class="title">lib</span>/<span class="title">node_modules</span>/<span class="title">hexo</span>/<span class="title">node_modules</span>/<span class="title">async</span>/<span class="title">lib</span>/<span class="title">async</span>.<span class="title">js</span>:32:24)</span>
+</pre></td></tr></table></figure>
+
+<p>根据<a href="https://github.com/tommy351/hexo/issues/118" target="_blank">这篇文章</a>的描述，出现这种情况的原因在于某些导入的rss里面出现了空tag，就是一个横线+空格后面啥都没有。应对的办法是将<code>/usr/local/lib/node_modules/hexo/node_modules/yamljs/bin/yaml.js</code>其中1298行那一句</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>continuationIndent = <span class="number">1</span> + /^\-((\s+)(.+?))?\s*$/<span class="variable">.exec</span>(<span class="keyword">this</span><span class="variable">.currentLine</span>)[<span class="number">2</span>]<span class="variable">.length</span>;
+</pre></td></tr></table></figure>
+
+<p>修改成为</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>var obj = /^\-((\s+)(.+?))?\s*$/.exec(this.current<span class="variable">Line</span>)[<span class="number">2</span>];
+<span class="function"><span class="title">if</span> <span class="params">(obj != undefined)</span> {
+     <span class="title">continuationIndent</span> = 1 + <span class="title">obj</span>.<span class="title">length</span>;
+}
+</pre></td></tr></table></figure>
+
+<p>就可以了。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+
+  <nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/技术点滴/公益广告/">公益广告</a><small>1</small></li>
+  
+    <li><a href="/categories/技术点滴/">技术点滴</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/AWS/">AWS</a><small>1</small></li>
+  
+    <li><a href="/tags/Coursera/">Coursera</a><small>1</small></li>
+  
+    <li><a href="/tags/MOOC/">MOOC</a><small>1</small></li>
+  
+    <li><a href="/tags/blog/">blog</a><small>1</small></li>
+  
+    <li><a href="/tags/emacs/">emacs</a><small>1</small></li>
+  
+    <li><a href="/tags/github/">github</a><small>1</small></li>
+  
+    <li><a href="/tags/gmail/">gmail</a><small>1</small></li>
+  
+    <li><a href="/tags/gpg/">gpg</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>4</small></li>
+  
+    <li><a href="/tags/iPython/">iPython</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>2</small></li>
+  
+    <li><a href="/tags/lisp/">lisp</a><small>2</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>1</small></li>
+  
+    <li><a href="/tags/shadowsocks/">shadowsocks</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>2</small></li>
+  
+    <li><a href="/tags/windows/">windows</a><small>1</small></li>
+  
+    <li><a href="/tags/youku/">youku</a><small>1</small></li>
+  
+    <li><a href="/tags/作品/">作品</a><small>3</small></li>
+  
+    <li><a href="/tags/博客/">博客</a><small>1</small></li>
+  
+    <li><a href="/tags/尝试/">尝试</a><small>1</small></li>
+  
+    <li><a href="/tags/开放课程/">开放课程</a><small>1</small></li>
+  
+    <li><a href="/tags/技术点滴/">技术点滴</a><small>2</small></li>
+  
+    <li><a href="/tags/格式转换/">格式转换</a><small>1</small></li>
+  
+    <li><a href="/tags/科研/">科研</a><small>1</small></li>
+  
+    <li><a href="/tags/科研流程/">科研流程</a><small>1</small></li>
+  
+    <li><a href="/tags/评论/">评论</a><small>1</small></li>
+  
+    <li><a href="/tags/问题解决/">问题解决</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 Wang Shuyi
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

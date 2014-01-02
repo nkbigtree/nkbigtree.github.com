@@ -1,0 +1,222 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>windows | 大树小屋技术版</title>
+  <meta name="author" content="Wang Shuyi">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="大树小屋技术版"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="大树小屋技术版" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">大树小屋技术版</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title tag">windows</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-10-08T05:20:09.000Z"><a href="/2013/10/08/2013-10-08windowsinstallhexo/">Oct 8 2013</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/10/08/2013-10-08windowsinstallhexo/">在windows7上安装部署hexo</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1>安装git</h1>
+<p><a href="https://msysgit.googlecode.com/files/Git-1.8.4-preview20130916.exe" target="_blank">下载地址</a></p>
+<p>注意安装的时候，第一项命令行选项不要选择默认。应该选择第二个，即可以从windows窗口中调用git，否则后面会报错。</p>
+<h1>安装node.js</h1>
+<p><a href="http://nodejs.org/dist/v0.10.20/node-v0.10.20-x86.msi" target="_blank">下载地址</a></p>
+<p>我已经把这两个文件都存了下来，见常用工具文件夹。</p>
+<h1>运行vpn</h1>
+<p>如果不运行vpn，不仅速度会慢，而且还会中间报错。</p>
+<h1>执行安装命令</h1>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="title">npm</span> install -g hexo
+</pre></td></tr></table></figure>
+
+<p>一切正常的话，就可以安装部署完毕了。</p>
+<h1>平台间转换工作</h1>
+<p>我在mac上面已经搭建了一个blog，并且能够正确上传到github了。在windows下面我主要需要进行修改更新。这里需要注意。首先需要设置一个email让github认识你是谁。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="comment">git</span> <span class="comment">config</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">global</span> <span class="comment">user</span>.<span class="comment">email</span> <span class="comment">"my</span> <span class="comment">email</span> <span class="comment">for</span> <span class="comment">github</span> <span class="comment">account"
+</pre></td></tr></table></figure>
+
+<p>删掉.deploy目录</p>
+<p>之后再来执行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="title">hexo</span> deploy -g
+</pre></td></tr></table></figure>
+
+<p>目前在执行该的时候会提示输入github的用户名和密码。我正在学习如何改进这个步骤。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+
+  <nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/技术点滴/公益广告/">公益广告</a><small>1</small></li>
+  
+    <li><a href="/categories/技术点滴/">技术点滴</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/AWS/">AWS</a><small>1</small></li>
+  
+    <li><a href="/tags/Coursera/">Coursera</a><small>1</small></li>
+  
+    <li><a href="/tags/MOOC/">MOOC</a><small>1</small></li>
+  
+    <li><a href="/tags/blog/">blog</a><small>1</small></li>
+  
+    <li><a href="/tags/emacs/">emacs</a><small>1</small></li>
+  
+    <li><a href="/tags/github/">github</a><small>1</small></li>
+  
+    <li><a href="/tags/gmail/">gmail</a><small>1</small></li>
+  
+    <li><a href="/tags/gpg/">gpg</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>4</small></li>
+  
+    <li><a href="/tags/iPython/">iPython</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>2</small></li>
+  
+    <li><a href="/tags/lisp/">lisp</a><small>2</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>1</small></li>
+  
+    <li><a href="/tags/shadowsocks/">shadowsocks</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>2</small></li>
+  
+    <li><a href="/tags/windows/">windows</a><small>1</small></li>
+  
+    <li><a href="/tags/youku/">youku</a><small>1</small></li>
+  
+    <li><a href="/tags/作品/">作品</a><small>3</small></li>
+  
+    <li><a href="/tags/博客/">博客</a><small>1</small></li>
+  
+    <li><a href="/tags/尝试/">尝试</a><small>1</small></li>
+  
+    <li><a href="/tags/开放课程/">开放课程</a><small>1</small></li>
+  
+    <li><a href="/tags/技术点滴/">技术点滴</a><small>2</small></li>
+  
+    <li><a href="/tags/格式转换/">格式转换</a><small>1</small></li>
+  
+    <li><a href="/tags/科研/">科研</a><small>1</small></li>
+  
+    <li><a href="/tags/科研流程/">科研流程</a><small>1</small></li>
+  
+    <li><a href="/tags/评论/">评论</a><small>1</small></li>
+  
+    <li><a href="/tags/问题解决/">问题解决</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 Wang Shuyi
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

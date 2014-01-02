@@ -1,0 +1,231 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>我喜爱的一种编程语言(二)：80年代MIT的经典教材 | 大树小屋技术版</title>
+  <meta name="author" content="Wang Shuyi">
+  
+  <meta name="description" content="MIT的课程现在大多上网了，可以让全世界的人通过网络来分享MIT的教学资源，这确实是一个伟大的举动。如果不是这样，我这样一个中国的学生如何能够了解我喜爱的这一种编程语言的强大威力呢？
+这种语言被作为范例语言，应用于MIT 6.001课程的教学，该课程的名字和使用教材的名字是一致的，英文的缩写叫做SI">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="我喜爱的一种编程语言(二)：80年代MIT的经典教材"/>
+  <meta property="og:site_name" content="大树小屋技术版"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="大树小屋技术版" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">大树小屋技术版</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2006-05-18T09:57:38.000Z"><a href="/2006/05/18/2006-05-18LispMITtextbook/">May 18 2006</a></time>
+      
+      
+  
+    <h1 class="title">我喜爱的一种编程语言(二)：80年代MIT的经典教材</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>MIT的课程现在大多上网了，可以让全世界的人通过网络来分享MIT的教学资源，这确实是一个伟大的举动。如果不是这样，我这样一个中国的学生如何能够了解我喜爱的这一种编程语言的强大威力呢？</p>
+<p>这种语言被作为范例语言，应用于MIT 6.001课程的教学，该课程的名字和使用教材的名字是一致的，英文的缩写叫做SICP。</p>
+<p>这本书如今已经出了第二版，它的第一版在1984年出版。我在图书馆里面找到过第一版的英文教材，在西文书库的深处，一个不起眼的书架的最上层，一共5本复本，全都蒙上了厚厚的一层尘土。</p>
+<p>第一版原版的封面，是紫色的底色，图画里面有一个魔术师，据说是中世纪的一幅绘画作品的改编版。因为上述特征，这本书与许多计算机界的经典教材一样，也有有趣的别名。</p>
+<p>读者如果是计算机专业的学生，大概听说过“the Dragon book”, “the Bear book”, “the Bluebook”等等名称吧？这些都是计算机学科里面经典权威之作。那么SICP的昵称叫什么呢？有以下几个称呼：“the Wizardbook”或者“the Purple book”，以及最令人叹为观止的名称──“the book”！</p>
+<p>教材的内容面向从来没有接触过计算机科学的学生，目的却是要通过这一门课程，把学生引入五彩缤纷的计算机科学世界，把很多计算机科学的研究、解决实际问题的方法教授给学生。与国内大学的计算机“扫盲课”不同，这门MIT的计算机“扫盲课”包含以下内容：</p>
+<p>“BuildingAbstractions with Procedures”, “Building Abstractions with Data”,“Modularity, Objects, and State”, “Metalinguistic Abstraction”,“Computing with Register Machines”……</p>
+<p>换句话说，这门课讲过之后，学生应该已经明白了lambda演算、递归程序、符号计算程序、高阶过程、面向对象、数据制导、消息驱动、解释器设计、编译器实现、逻辑程序设计、数据库查询语言设计……</p>
+<p>读者如果是内行的话，现在应该在嘴角挂着一丝不屑的微笑，心里说：怎么可能？！这些内容，别说是第一次接触计算机科学的大学新生，即便是上到研究生的专业人士，恐怕也搞不清楚吧。况且要在仅有一学期时间的一门课程之内讲完这些，岂不是美国式的填鸭教育？！</p>
+<p>如果您能想到这一层，那您确实是内行。但是现在我很负责任的告诉您，这并不是天方夜谭，是实在的授课计划。其实我刚才叙述的内容还有一个保留，就是除了学刚才那些东西之外，还兼顾要学一门计算机编程语言！</p>
+<p>可是，魔法就展现在这个地方，正是这种编程语言应用于教学，使得上述全部的教学目标可以十分轻松地实现！学生们学习这门语言需要多长时间呢？</p>
+<p>我先得问问读者您？您如果正式学过C语言或者其他高级语言(Basic, Pascal,C++)课程的话，用了多长时间呢？答案或许是几个月、一个学期，甚至一年。主要学了什么呢？对，是该语言本身。也就是怎么写表达式、怎么写函数、怎么来定义数组、怎么样使用指针、怎样来理解并使用面向对象的先进特性……老师上课讲的其实就是语法，下课留作业练习，并且考试依然会考察。除了这门语言的语法之外，您在学习它的那个学期，用它编过什么有实际价值或者是教学意义的程序呢？</p>
+<p>……(给读者的思考时间)</p>
+<p>下面公布答案：学习笔者喜爱的这门语言的基本语法需要教师几句话的时间，初步达到“掌握”程度需要几个小时，几天之后，学生就可以利用该语言来解决实际问题了。</p>
+<p>行文至此，该语言对于读者来说，已经毫无秘密可言了。我连教材的名称都说了，所以您尽可以按图索骥，自己去寻找答案。但是，只怕此时，读者的心中，已经有了新的疑惑：</p>
+<ol>
+<li><p>80年代中期的时候，那些目前在我国大学乃至中学计算机课常见的教学语言，例如basic, pascal,C都已经成熟了，为什么MIT不利用这些语言进行计算机系入门教学呢？是教授不会用它们？时间过了20年，全世界上百所大学(包括普林斯顿在内)的计算机系课程都采用该教材了，难道这些学校的教授也需要进行编程语言基础培训？</p>
+</li>
+<li><p>如果这种语言真的有笔者上述所说的那么好，那问题就更大了。这样一种低起点、低投入、高效益的计算科学教学方法，为什么咱们中国的大学计算机系不“拿来”使用呢？况且这是MIT的开放课程，不存在搞不到教材之类的问题呀？</p>
+</li>
+</ol>
+<p>……</p>
+<p>实际上，这才是我真正要说的，不过这已经不是这本教材的事情了，放在这里文不对题。我打算在有空的时候写一篇专门针对该语言的评价文章，所以，呵呵，且听下回分解……</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/作品/">作品</a>, <a href="/tags/lisp/">lisp</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/技术点滴/公益广告/">公益广告</a><small>1</small></li>
+  
+    <li><a href="/categories/技术点滴/">技术点滴</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/AWS/">AWS</a><small>1</small></li>
+  
+    <li><a href="/tags/Coursera/">Coursera</a><small>1</small></li>
+  
+    <li><a href="/tags/MOOC/">MOOC</a><small>1</small></li>
+  
+    <li><a href="/tags/blog/">blog</a><small>1</small></li>
+  
+    <li><a href="/tags/emacs/">emacs</a><small>1</small></li>
+  
+    <li><a href="/tags/github/">github</a><small>1</small></li>
+  
+    <li><a href="/tags/gmail/">gmail</a><small>1</small></li>
+  
+    <li><a href="/tags/gpg/">gpg</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>4</small></li>
+  
+    <li><a href="/tags/iPython/">iPython</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>2</small></li>
+  
+    <li><a href="/tags/lisp/">lisp</a><small>2</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>1</small></li>
+  
+    <li><a href="/tags/shadowsocks/">shadowsocks</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>2</small></li>
+  
+    <li><a href="/tags/windows/">windows</a><small>1</small></li>
+  
+    <li><a href="/tags/youku/">youku</a><small>1</small></li>
+  
+    <li><a href="/tags/作品/">作品</a><small>3</small></li>
+  
+    <li><a href="/tags/博客/">博客</a><small>1</small></li>
+  
+    <li><a href="/tags/尝试/">尝试</a><small>1</small></li>
+  
+    <li><a href="/tags/开放课程/">开放课程</a><small>1</small></li>
+  
+    <li><a href="/tags/技术点滴/">技术点滴</a><small>2</small></li>
+  
+    <li><a href="/tags/格式转换/">格式转换</a><small>1</small></li>
+  
+    <li><a href="/tags/科研/">科研</a><small>1</small></li>
+  
+    <li><a href="/tags/科研流程/">科研流程</a><small>1</small></li>
+  
+    <li><a href="/tags/评论/">评论</a><small>1</small></li>
+  
+    <li><a href="/tags/问题解决/">问题解决</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 Wang Shuyi
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

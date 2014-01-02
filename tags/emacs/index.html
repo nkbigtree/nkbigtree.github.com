@@ -1,0 +1,257 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>emacs | 大树小屋技术版</title>
+  <meta name="author" content="Wang Shuyi">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="大树小屋技术版"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="大树小屋技术版" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">大树小屋技术版</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title tag">emacs</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2006-06-19T02:45:42.000Z"><a href="/2006/06/19/2009-06-19diaryWithEasygpg/">Jun 19 2006</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2006/06/19/2009-06-19diaryWithEasygpg/">使用easypg记日记</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2>缘起</h2>
+<p>xbeta推荐vim的原因有很多，其中最吸引我的是简便的加密功能。在vim下面，一个:X命令就可以加密日记了，这样我就不需要到处去查找什么专用的“日记软件”了。</p>
+<p>可是用了一段时间，还是觉得自己对emacs更喜欢一些。毕竟这些年用得最熟练的编辑器软件就是emacs了，花许多时间重新学习vim的各项功能实际上颇有些重复投资的意味。于是就希望能够在emacs下面找到一个简便的加密方法，这样可以迅速调整回来。</p>
+<h2>尝试</h2>
+<p>上网搜索了一下，发现高手们众口一词推荐gnupg，并且说使用这个工具来加密文本文件颇有些大炮轰蚊子的意味。言下之意，比vim的加密要可靠得多。颇为欣喜，就打算一试。但是高手们同时宣称，gnupg用起来还是比较麻烦的，搞得我这个emacs二把刀颇有些踟蹰。</p>
+<p>这时，发现有高手推荐easypg，说这个emacs扩展可以把gnupg的加密功能方便地融入到emacs当中，用起来简便至极。我于是就打算开始尝试。</p>
+<p>可是，令人沮丧的是，网上相关的中文教程，竟然没有一篇是完全的。换句话说，那些高手的blog文章，只是为了给自己做个备忘录。他们相比都经历过emacs+gnupg的原始阶段，只是感觉easypg方便些，于是就记录easypg的安装方法，以及蜻蜓点水说两句相关命令。</p>
+<p>问题是，我连gnupg都没有用过，把这个easypg安装上，又该如何使用呢？很不幸，各路高手对此不予置评。</p>
+<p>我于是自己登录easypg的主页，发现这个主页可真够干净的，只是提供特性描述、下载链接、截图一类的东西，居然就没有个帮助文档或者教程之类的东西。只好暂时放弃了。</p>
+<h2>发现</h2>
+<p>幸好，现在写文章都有个版权意识。有个高手所写的文章末尾，也加入了参考文献，都是英文的。点开一个一看，立刻就明白了八九分。还是人家老外写东西讲究让别人能看懂啊，呵呵。</p>
+<h2>方法</h2>
+<h3>安装</h3>
+<p>emacs23 cvs版本里面自带easypg，建议大家换这个版本，用起来那是相当的方便，省去很多麻烦。</p>
+<p>然后只需要在配置文件(~/.emacs)之内加入如下说明：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="list">(<span class="title">require</span><span class="body"> 'epa-file)</span></span> <span class="list">(<span class="title">epa-file-enable</span><span class="body">)</span></span>
+</pre></td></tr></table></figure>
+
+<p>这样，就能用了。</p>
+<h3>密钥</h3>
+<h4>密钥生成</h4>
+<p>这个部分就是所有高手都会跨过去的内容。他们认为一个人找来easypg来加密文件，必然已经对gnupg十分熟悉，且对其使用繁琐已经深恶痛绝了。其实不然，例如本人也打算使用easypg来着，可是gnupg还真就没折腾过我，呵呵。</p>
+<p>要加密文件，首先得有个密钥。这里需要用gnupg先去生成一个，方法是：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="title">gpg</span> -export [UID]
+</pre></td></tr></table></figure>
+
+<p>这里UID部分是可以省略的，然后gnupg会问你一些问题：“怎么称呼啊？邮件地址？有没有啥要说明的？”之类，依次填写上，就可以了。然后会让你输入一个密码，作为使用这个密钥的依据。</p>
+<h4>密钥备份</h4>
+<p>至此，这个密钥就算放在系统里面了，以后就能使用了，至于怎么用我下面要讲。这里注意需要做一下备份，否则以后您换了机器，或者本机系统挂掉，那您的文件也就得跟着一去不复返了。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="title">gpg</span> -export [UID]
+</pre></td></tr></table></figure>
+
+<p>屏幕上会出现乱七八糟的东西，别着急，这是二进制的显示，您应该想法存到一个文件里面，放到一个妥帖的地方保管起来，例如优盘之类。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="comment">gpg</span> <span class="literal">-</span><span class="comment">export</span> <span class="title">[</span><span class="comment">UID</span>] <span class="literal">-</span><span class="comment">o</span> <span class="comment">filename
+</pre></td></tr></table></figure>
+
+<p>就可以生成一个密钥文件了。</p>
+<h4>密钥恢复</h4>
+<p>需要恢复的时候，只要</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="title">gpg</span> -<span class="import"><span class="keyword">import</span> Filename</span>
+</pre></td></tr></table></figure>
+
+<p>就好了。</p>
+<h2>使用</h2>
+<p>下面，我们将需要加密的文件存成.gpg格式，也就是换成这个扩展名就好了。</p>
+<p>但是，这样一来以后每次打开的时候，原先文件对应的mode就不能正确打开了（因为扩展名变了），所以，我们需要提示emacs，这是个加密文件，但同时它也属于某个mode，请正确显示之。</p>
+<p>例如，我试的第一个文件，原本是.org类型，也就是org-mode笔记文件。改成gpg扩展名之后，还需要在文件头部加入这样一行：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>-<span class="variable">*-</span> mode: org -<span class="variable">*-</span> -<span class="variable">*-</span> epa-file-encrypt-to:
+(<span class="string">"myaccount<span class="variable">@gmail</span>.com"</span>) -<span class="variable">*-</span>
+</pre></td></tr></table></figure>
+
+<p>这样一来，就ok了。您可以照葫芦画瓢，不过请把邮箱地址改成您自己的即可。</p>
+<p>好了，让我们关上文件，再次启动吧。emacs在打开文件之前，就会提示您输入密钥使用密码的，只有正确输入才能打开，这样跟vim的:X功能的效果没有什么差别，只是加密强度高多了。</p>
+<h2>小结</h2>
+<p>本文介绍了emacs结合easypg加密的方法。希望通过笔者的介绍，能使您掌握emacs下面对文本文件加密的简单方法，不必为了一个加密功能转投其他编辑器的怀抱。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+
+  <nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/技术点滴/公益广告/">公益广告</a><small>1</small></li>
+  
+    <li><a href="/categories/技术点滴/">技术点滴</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/AWS/">AWS</a><small>1</small></li>
+  
+    <li><a href="/tags/Coursera/">Coursera</a><small>1</small></li>
+  
+    <li><a href="/tags/MOOC/">MOOC</a><small>1</small></li>
+  
+    <li><a href="/tags/blog/">blog</a><small>1</small></li>
+  
+    <li><a href="/tags/emacs/">emacs</a><small>1</small></li>
+  
+    <li><a href="/tags/github/">github</a><small>1</small></li>
+  
+    <li><a href="/tags/gmail/">gmail</a><small>1</small></li>
+  
+    <li><a href="/tags/gpg/">gpg</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>4</small></li>
+  
+    <li><a href="/tags/iPython/">iPython</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>2</small></li>
+  
+    <li><a href="/tags/lisp/">lisp</a><small>2</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>1</small></li>
+  
+    <li><a href="/tags/shadowsocks/">shadowsocks</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>2</small></li>
+  
+    <li><a href="/tags/windows/">windows</a><small>1</small></li>
+  
+    <li><a href="/tags/youku/">youku</a><small>1</small></li>
+  
+    <li><a href="/tags/作品/">作品</a><small>3</small></li>
+  
+    <li><a href="/tags/博客/">博客</a><small>1</small></li>
+  
+    <li><a href="/tags/尝试/">尝试</a><small>1</small></li>
+  
+    <li><a href="/tags/开放课程/">开放课程</a><small>1</small></li>
+  
+    <li><a href="/tags/技术点滴/">技术点滴</a><small>2</small></li>
+  
+    <li><a href="/tags/格式转换/">格式转换</a><small>1</small></li>
+  
+    <li><a href="/tags/科研/">科研</a><small>1</small></li>
+  
+    <li><a href="/tags/科研流程/">科研流程</a><small>1</small></li>
+  
+    <li><a href="/tags/评论/">评论</a><small>1</small></li>
+  
+    <li><a href="/tags/问题解决/">问题解决</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 Wang Shuyi
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

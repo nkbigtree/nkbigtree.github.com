@@ -1,0 +1,221 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>我喜爱的一种编程语言(一)：一亿英里外的星际调试 | 大树小屋技术版</title>
+  <meta name="author" content="Wang Shuyi">
+  
+  <meta name="description" content="给用户编了程序，进行调试是少不了的，毕竟程序员是人，编制的程序不可能在一开始就考虑得面面俱到，如果真是在初始阶段就能把将来会出现的所有情况完全确定了，那么几乎可以断言这个程序没有什么用处，例如&quot;Hello World!&quot;之类。
+程序的调试按照最简单的分法可以分为交付前测试与程序实">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="我喜爱的一种编程语言(一)：一亿英里外的星际调试"/>
+  <meta property="og:site_name" content="大树小屋技术版"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="大树小屋技术版" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">大树小屋技术版</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2006-05-02T09:56:00.000Z"><a href="/2006/05/02/2006-05-02LispStarDebug/">May 2 2006</a></time>
+      
+      
+  
+    <h1 class="title">我喜爱的一种编程语言(一)：一亿英里外的星际调试</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>给用户编了程序，进行调试是少不了的，毕竟程序员是人，编制的程序不可能在一开始就考虑得面面俱到，如果真是在初始阶段就能把将来会出现的所有情况完全确定了，那么几乎可以断言这个程序没有什么用处，例如&quot;Hello World!&quot;之类。</p>
+<p>程序的调试按照最简单的分法可以分为交付前测试与程序实际运行之后的除错与修改。前者好办，无非是用一些简单、抽象的样例来判断一下程序功能是否完善，说白了，就是自己折腾一下自己的程序；后者往往比较复杂一些，有时侯用户自己都不知道需求是什么，所以对拿到手的程序有诸多不满。或者是尽管程序符合要求，但是在实际运行当中，用户发现自己设定的需求本身就需要改动……不论如何，这种后期调试都是比较困难的，尤其是当程序已经运行在服务器上面的时候，如果修改程序，那么必然会影响服务的正常运行。短短几个小时的调试带来的直接和间接经济损失都会令用户觉得无法承受。</p>
+<p>我最近才发现了一种一直被我忽略的编程语言具有这样的特性──可以在运行当中进行调试，不仅不影响原有功能的正常运行，更可以使得程序员进行远程调试的时候，感觉跟在自己的机器上调试没有什么区别。</p>
+<p>对于制做服务器级程序──诸如web server之类──来说，这真是福音！</p>
+<p>可是，真正给我留下深刻印象的是下面这个故事，发生在上个世纪末的“一亿英里外的星际调试”：</p>
+<p>NASA在1998年搞了一个Deep Space 1mission。在航天器升空一年半之后，距地球的距离已经达到一亿英里，这时航天器将在一段代码的控制之下，进行为期两天的一系列实验。可是这段代码直到运行起来，地面人员才发现问题。程序员不小心制造的一个细微的bug躲过了森严的发射前检查，直到它在遥远的宇宙空间中真正运行起来的时候，方才初露端倪。这个bug导致了竞争冒险，也就是说有可能造成控制错误！</p>
+<p>这下可麻烦了，难道放弃当前的实验，以避免控制错误吗？那代价可比地球上面一个服务器停机维护几个小时大得太多了！</p>
+<p>听之任之？也不行，如果控制错误真正发生，后果更加不堪设想！</p>
+<p>听起来像个悖论，呵呵。</p>
+<p>幸好，这段代码是用我上面提到的这种编程语言编写的。于是，开发小组立刻开始了远程调试。实验还在一亿英里之外按部就班进行，而出现控制错误的风险，就在这进行着的实验序列当中，被地球上的程序员利用“运行时调试”的功能悄无声息地解决掉了……</p>
+<p>难怪其中的一个程序员在这次任务的记录中写下如下的话：</p>
+<blockquote><p>“Debugginga program running on a $100M piece of hardware that is 100 millionmiles away is an interesting experience. Having a read-eval-print looprunning on the spacecraft proved invaluable in finding and fixing theproblem.”</p>
+</blockquote>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/作品/">作品</a>, <a href="/tags/lisp/">lisp</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/技术点滴/公益广告/">公益广告</a><small>1</small></li>
+  
+    <li><a href="/categories/技术点滴/">技术点滴</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/AWS/">AWS</a><small>1</small></li>
+  
+    <li><a href="/tags/Coursera/">Coursera</a><small>1</small></li>
+  
+    <li><a href="/tags/MOOC/">MOOC</a><small>1</small></li>
+  
+    <li><a href="/tags/blog/">blog</a><small>1</small></li>
+  
+    <li><a href="/tags/emacs/">emacs</a><small>1</small></li>
+  
+    <li><a href="/tags/github/">github</a><small>1</small></li>
+  
+    <li><a href="/tags/gmail/">gmail</a><small>1</small></li>
+  
+    <li><a href="/tags/gpg/">gpg</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>4</small></li>
+  
+    <li><a href="/tags/iPython/">iPython</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>2</small></li>
+  
+    <li><a href="/tags/lisp/">lisp</a><small>2</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>1</small></li>
+  
+    <li><a href="/tags/shadowsocks/">shadowsocks</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>2</small></li>
+  
+    <li><a href="/tags/windows/">windows</a><small>1</small></li>
+  
+    <li><a href="/tags/youku/">youku</a><small>1</small></li>
+  
+    <li><a href="/tags/作品/">作品</a><small>3</small></li>
+  
+    <li><a href="/tags/博客/">博客</a><small>1</small></li>
+  
+    <li><a href="/tags/尝试/">尝试</a><small>1</small></li>
+  
+    <li><a href="/tags/开放课程/">开放课程</a><small>1</small></li>
+  
+    <li><a href="/tags/技术点滴/">技术点滴</a><small>2</small></li>
+  
+    <li><a href="/tags/格式转换/">格式转换</a><small>1</small></li>
+  
+    <li><a href="/tags/科研/">科研</a><small>1</small></li>
+  
+    <li><a href="/tags/科研流程/">科研流程</a><small>1</small></li>
+  
+    <li><a href="/tags/评论/">评论</a><small>1</small></li>
+  
+    <li><a href="/tags/问题解决/">问题解决</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 Wang Shuyi
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

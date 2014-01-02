@@ -1,0 +1,689 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Archives | 大树小屋技术版</title>
+  <meta name="author" content="Wang Shuyi">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="大树小屋技术版"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="大树小屋技术版" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">大树小屋技术版</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">Archives</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-01-02T13:20:07.000Z"><a href="/2014/01/02/20140102shadowsocksonawsjapan/">Jan 2 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/01/02/20140102shadowsocksonawsjapan/">AWS上部署shadowsocks</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>试了一个晚上，打算在AWS上面建一个vpn，可惜台湾同胞2011年的一键教程似乎对ubuntu 12.04并不奏效（当时他用的还是10.10）。一直到后面编译报错。没办法，尝试另一条路径——AWS上面部署shadowsocks。</p>
+<p>现在用的是日本数据中心，回头可以试试新加坡的。反正用的都是ubuntu，有啥不同？</p>
+<p>还是参考 <a href="https://github.com/clowwindy/shadowsocks/wiki/Shadowsocks-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E" target="_blank">https://github.com/clowwindy/shadowsocks/wiki/Shadowsocks-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E</a></p>
+<p>首先</p>
+<pre><code><span class="comment">python</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">version</code></pre>
+<p>2.7.3，没问题。</p>
+<pre><code><span class="title">sudo</span> apt-get install python-pip
+<span class="title">sudo</span> pip install shadowsocks
+<span class="title">vi</span> config.json</code></pre>
+<p>config.json 里面 server 一项，必须使用 Public DNS， 那个 Public IP 无效。</p>
+<pre><code>{
+    "<span class="attribute">server</span>":<span class="value"><span class="string">"(mypublicDNS)"</span></span>,
+    "<span class="attribute">server_port</span>":<span class="value"><span class="number">8388</span></span>,
+    "<span class="attribute">local_port</span>":<span class="value"><span class="number">1080</span></span>,
+    "<span class="attribute">password</span>":<span class="value"><span class="string">"(mypassword)"</span></span>,
+    "<span class="attribute">timeout</span>":<span class="value"><span class="number">600</span></span>,
+    "<span class="attribute">method</span>":<span class="value"><span class="string">"aes-256-cfb"</span>
+}</span></code></pre>
+<p>然后执行</p>
+<pre><code>su<span class="operator"><span class="keyword">do</span> apt-<span class="keyword">get</span> install python-m2crypto
+sudo apt-<span class="keyword">get</span> install python-gevent
+nohup ssserver &gt; log &amp;</code></pre>
+<p>注意还需要修改 Security Group 里面对应的端口</p>
+<p>因为我用的是8388， 这种socks端口我分不清是 TCP 还是 UDP，干脆全部都打开，而且加上出、入，反正一共写了4个 8388</p>
+<p>本机上设置config.json，依然注意server用public dns，不要用IP.</p>
+<p>ok，尽情享受日本AWS机房带来的快速和便捷吧！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-01-01T12:59:38.000Z"><a href="/2014/01/01/20140101multiplehexogithubaccountmanagement/">Jan 1 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/01/01/20140101multiplehexogithubaccountmanagement/">Hexo blog 建立流程全记录</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>这个教程主要是讲如何在一个机器上面利用多个github 账号建立多个不同的 hexo blog，让它们之间相互不影响。可以让平时需要记录的信息产生分流。</p>
+<h2>安装hexo</h2>
+<p>从略，因为hexo自身的教程写得太清楚了，重复起来没有意思。</p>
+<h2>申请一个Gmail</h2>
+<p>当然，可以申请任何邮箱。但是gmail的好处不必多说。而且不像原先控制那么严格，Gmail几乎可以随便申请了。中间需要填写一个手机号码，我4个邮箱用的1个手机号码。只有最后一次要求我短信验证。</p>
+<p>为了后面叙述方便，假设邮箱账号设置为 myaccount1 吧。</p>
+<h2>申请一个 github</h2>
+<p>如果运气好的话，github上面的账号名称可以和gmail相同，那样就好办多了。</p>
+<p>申请成功之后，创建一个repo，repo的名字一定要取 myaccount1.github.com，然后记得要把页面上面对应的ssh地址拷贝下来备用。</p>
+<pre><code><span class="label">https:</span>//github<span class="preprocessor">.com</span>/myaccount1/myaccount1<span class="preprocessor">.github</span><span class="preprocessor">.com</span><span class="preprocessor">.git</span></code></pre>
+<h2>建立ssh key</h2>
+<pre><code><span class="title">cd</span> ~/.ssh
+ssh-keygen -t rsa -C <span class="string">'myaccount1<span class="variable">@gmail</span>.com'</span></code></pre>
+<p>注意生成的文件名称不要用默认的 <code>~/.ssh/id_rsa</code>，改成 <code>id_rsa_myaccount1</code>，之后 .ssh目录下面就会出现两个新的文件，一个叫做 <code>id_rsa_myaccount1</code>， 另一个叫做 <code>id_rsa_myaccount1.pub</code></p>
+<p>执行</p>
+<pre><code><span class="title">ssh</span>-add id_rsa_myaccount1</code></pre>
+<p>然后打开 <code>id_rsa_myaccount1.pub</code></p>
+<p>把其中的全部内容复制，上 github，在 account setting 里面添加 ssh key</p>
+<p>名字一栏随便填写，就是个记号， 例如可以叫做 myaccount1 on win 等。</p>
+<p>然后内容里面把剪贴板里面的东西粘贴进来。保存。</p>
+<p>在 ~/.ssh 目录下面新建/修改 config 文件</p>
+<p>追加以下内容</p>
+<pre><code><span class="comment"># comment blablabla (myaccount1<span class="yardoctag">@gmail</span>.com)</span>
+<span class="constant">Host</span> github-myaccount1
+<span class="constant">HostName</span> github.com 
+<span class="constant">User</span> git 
+<span class="constant">IdentityFile</span> ~<span class="regexp">/.ssh/id</span>_rsa_myaccount1</code></pre>
+<p>保存</p>
+<h2>hexo blog 建立</h2>
+<p>创建一个目录，我喜欢在 blog 目录下面新建 myaccount1目录。这样既便于集中管理，同时又可以清晰对比，分门别类。</p>
+<p>进入 blog/myaccount1，执行</p>
+<pre><code><span class="title">hexo</span> init</code></pre>
+<p>然后修改 <code>_config.yml</code> 的最后 deploy 部分，</p>
+<p>改为</p>
+<pre><code><span class="method">deploy:</span>
+  <span class="method">type:</span> github
+  <span class="method">repository:</span> git@github-<span class="method">myaccount1:</span>myaccount1/myaccount1.github.com.git
+  <span class="method">branch:</span> master</code></pre>
+<p>尤其注意第三行中的</p>
+<pre><code><span class="attribute">github-myaccount1</code></pre>
+<p>原先从github当中保留下来的ssh地址应该是</p>
+<pre><code>git@github<span class="variable">.com</span>:myaccount1/myaccount1<span class="variable">.github</span><span class="variable">.com</span><span class="variable">.git</span></code></pre>
+<p>但是由于在本机上面有多个github账号，因此必须予以区别，原先github.com的写法就不能要了，代之以在 ~/.ssh/config 中进行的重命名。</p>
+<h2>测试</h2>
+<p>修改 <code>_config.yml</code> 中的博客名称和作者等必要信息</p>
+<p>执行</p>
+<pre><code><span class="title">hexo</span> g
+<span class="title">hexo</span> d</code></pre>
+<p>成功。</p>
+<p>注意第一次生成博客需要等10分钟，心急吃不了热豆腐。 :-P</p>
+<h2>后续工作</h2>
+<p>这样做有个问题，就是占用了许多免费资源。我也怕 Google 会因为长期不活跃登录，收走我的邮箱账号。虽然我觉得大公司不至于如此小气。以防万一吧。</p>
+<p>到 gmail 中，设置 -&gt; 转发。 把所有的邮件转发到自己的主邮件去。 这样一来时常会有操作。而来即便Google要收账号，肯定也得通知。可以第一时间获知，采取对策。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-12-20T01:57:00.000Z"><a href="/2013/12/20/20131220shadowsocksconfig/">Dec 20 2013</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/12/20/20131220shadowsocksconfig/">Shadowsocks配置</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>比较了一个早晨，最终选择使用digital ocean的VPS。虽然价格不菲（一个月得30多元人民币），但是可以运行各种服务，SSD速度快，并且是按月付费。如果觉得不好用可以随时停掉。现在大家似乎都在用VPS了。而且由于大部分VPS提供商限制公开VPN的搭建，所以Shadowsocks几乎被众口一词推为首选。我也来凑凑热闹。</p>
+<p>用paypal交了5美元之后，先不要急着建立droplet，先弄个ssh。</p>
+<p>本地参考 <a href="https://cloud.digitalocean.com/ssh_keys" target="_blank">https://cloud.digitalocean.com/ssh_keys</a> 里面“help”部分的介绍即可，没啥可说的。</p>
+<p>注意粘贴要完全。另外给ssh key起个名字。</p>
+<p>有了ssh key，再建立droplet，注意要勾选刚才的ssh key name。这样才能起作用。</p>
+<p>本地执行</p>
+<pre><code>$ ssh root@xx<span class="variable">.xx</span><span class="variable">.xx</span><span class="variable">.xx</span></code></pre>
+<p>好了，现在连接上了。</p>
+<p>之后参考</p>
+<p><a href="https://github.com/clowwindy/shadowsocks/wiki/Shadowsocks-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E" target="_blank">https://github.com/clowwindy/shadowsocks/wiki/Shadowsocks-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E</a></p>
+<p>注意建立config.json之后，服务器上面一份，本地一份。</p>
+<p>服务器执行 </p>
+<pre><code><span class="title">nohup</span> ssserver &gt; log &amp;</code></pre>
+<p>本地执行</p>
+<pre><code><span class="attribute">sslocal</code></pre>
+<p>注意本地运行之前，因为我们使用了非table加密方式，而是aes-256-cfb，因此需要安装环境。</p>
+<p>在ubuntu下面好办，但是mac下面有些麻烦。</p>
+<p>需要执行</p>
+<pre><code><span class="title">sudo</span> port install swig
+<span class="title">sudo</span> port install swig-python
+<span class="title">pip</span> install m2crypto</code></pre>
+<p>本地和服务器都运行之后，在chrome的Proxy SwitchySharp 里面新建环境</p>
+<p>注意选择socks5，127.0.0.1, 1080跟config.json一样即可。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-11-12T09:54:32.000Z"><a href="/2013/11/12/2013-11-12-needtoknowwhenincludeyoukumovieinhexo/">Nov 12 2013</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/11/12/2013-11-12-needtoknowwhenincludeyoukumovieinhexo/">在Hexo博客中插入youku视频的注意事项</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天新建了一篇博客，里面包含了优酷视频。之前插入优酷视频都很正常，今天却出了问题。因为首页上面默认显示最新的一篇，结果因为包含了优酷视频嵌入代码，从首页就直接跳转到优酷网站去了。</p>
+<p>我于是开始查找原因，后来在优酷网站上面看到了视频分享地址有不同的类型。</p>
+<p><img src="https://u0mvkq.bay.livefilestore.com/y2pFlhEevUQawCVKnoRKIFZcCH2gaRQtGsmhKl9UvqedHwbn3_CzOAvB4y0fviW5YJTAAhg92fQZtCyvpnIc19ErQM0L0D8iaz2DMD3U5WCqSg/differentWaysSharingYoukuVideoLinks.png?psid=1" alt="视频分享地址有不同的类型"></p>
+<p>我觉得通用的代码更好，就选择这种吧，拷贝出来。在编辑器里面对比了一下两次不同的嵌入代码，如图所示。</p>
+<p><img src="https://u0mvkq.bay.livefilestore.com/y2pIo4UCHYbZyd4AyPQ6PHl2xyI03o9qdy2SDrgJLXoxlKxRXd40hf3WRJkpKTfIsWlbI-dHf6wMmw0G8J3uhpl_NvH4iAQx-YdsV6OFiWJvpk/codeCompareEmbeddedYoukuHexo.png?psid=1" alt="不同的嵌入代码"></p>
+<p>发现可能是优酷对于分享功能进行了更新的缘故吧。其实差别在于前者用“v.youku”，后者“player.youku”，还有就是是否包含html结尾的区别。用了后一种方式，立刻就好了。可是奇怪之前的post我并没有进行更新，为何就没有跳转到优酷的问题发生呢？</p>
+<p>回头可以试试看。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-10-17T13:07:00.000Z"><a href="/2013/10/17/2013-10-17-sample-process-record/">Oct 17 2013</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/10/17/2013-10-17-sample-process-record/">sample-process-record</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>xlimit = randint(1,5)<br>    print xlimit</p>
+<pre><code><span class="number">3</span></code></pre>
+<p>$e^{\frac{i\cdot x}{3}}$, $i = 1, 2, 3, 4, 5$</p>
+<pre><code>import numpy as np
+import <span class="transposed_variable">matplotlib.</span>pyplot as plt
+x = <span class="transposed_variable">np.</span><span class="built_in">linspace</span>(<span class="number">0</span>, xlimit, <span class="number">100</span>)
+<span class="keyword">for</span> <span class="built_in">i</span> in xrange(<span class="number">5</span>):
+    <span class="transposed_variable">plt.</span>figure(<span class="number">1</span>)
+    <span class="transposed_variable">plt.</span>plot(x, <span class="transposed_variable">np.</span><span class="built_in">exp</span>(<span class="built_in">i</span>*x/<span class="number">3</span>))
+<span class="transposed_variable">plt.</span>show()</code></pre>
+<p><img src="/img/sample-process-record_2_0.png" alt="png"></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-10-13T12:41:13.000Z"><a href="/2013/10/13/2013-10-13-multimediatest/">Oct 13 2013</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/10/13/2013-10-13-multimediatest/">youku多媒体测试</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>试试这一段youtube视频。</p>
+<p>这是我之前推荐给学生的一段“励志”视频。</p>
+<iframe width="560" height="315" src="//www.youtube.com/embed/tGn3-RW8Ajk" frameborder="0" allowfullscreen></iframe>
+
+<p>下面试试youku视频。</p>
+<p>这是我特别欣赏的Zealer评测视频。这一期测试的是千元机红米。</p>
+<iframe height=498 width=510 src="http://player.youku.com/embed/XNTY2ODY1MDY4" frameborder=0 allowfullscreen></iframe>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-10-09T09:39:42.000Z"><a href="/2013/10/09/2013-10-09-duoshuosetup/">Oct 9 2013</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/10/09/2013-10-09-duoshuosetup/">hexo安装多说插件</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>这个事情很有意思。以前我一直觉得提供评论功能是博客自身的事情，后来也见过disqus一类的第三方评论功能。但是能够把评论、跨平台分享等功能结合起来打包提供的应用我之前确实没有留意过。</p>
+<p>hexo部署到了github之后，没有评论功能。我于是打算自己添加一个。看到好几个相关<a href="http://zipperary.com/2013/05/30/hexo-guide-4/" target="_blank">博客</a>上面都推荐多说。所以干脆我也注册一个。</p>
+<p>注册可选账号还很多，我用的QQ。上面提示已经有10万人使用了。奇怪，有那么多活跃博主？</p>
+<p>注册之后申请一个duoshuo的二级域名，然后就有一段通用代码。把它复制到</p>
+<p><code>themes\light\layout\_partial\comment.ejs</code>文件中，注意保留之前文件的部分代码，就像这个样子：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre>&lt;% <span class="keyword">if</span> ( page.comments){ %&gt;
+<span class="xml"><span class="tag">&lt;<span class="title">section</span> <span class="attribute">id</span>=<span class="value">"comment"</span>&gt;</span>
+通用代码
+<span class="tag">&lt;/<span class="title">section</span>&gt;</span>
+<span class="vbscript">&lt;% } %&gt;</span></span>
+</pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-10-09T08:10:31.000Z"><a href="/2013/10/09/2013-10-09-courserabatchdownloads/">Oct 9 2013</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/10/09/2013-10-09-courserabatchdownloads/">Coursera开放课程批量下载</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2>缘起</h2>
+<p>信息偶遇这个事情很奇妙。自从学院布置给我一门数据库双语课，我就一直如坐针毡。因为我十几年前学的数据库，那时候只讲关系型数据库，用的统一都是Microsoft SQL Server，哪里会讲什么半结构化、非结构化数据。JSON和NOSQL更是闻所未闻。翻翻现在的教材，一堆新内容。而且学的时候就是中文，冷不丁让我改成英文，我自己怎么也得先充充电不是？</p>
+<p>咨询了一下在天大教数据库课程的同学，告诉我说“First Course of Database”这本书配套网站里面有课件和视频。但是我没找着。</p>
+<p>正在我一筹莫展的时候，突然发现了coursera。其实这话说得不确切。我早就发现它了，只是并不知道它上面的课居然那么齐全，居然还有数据库的。而且教授数据库的刚好来自Stanford大学，而且就是First Course这本书的第二作者。</p>
+<p>我需要干啥？自然是先把上面所有的内容下载下来再说喽。</p>
+<p>可是谈何容易。虽然Firefox可以利用Down Them All下载全部视频，但是下载来的视频不能保持原先的结构。而且课程还有很多配套的资料，例如ppt和pdf讲义、SRT字幕等，我可不愿意一一点开下载。那是否有更好的办法能下载全部材料呢？幸好，我找到了Coursera相关的一个<a href="https://github.com/jplehmann/coursera" target="_blank">python项目</a>，能够批量下载某门课程的全部内容。</p>
+<h2>实际操作</h2>
+<p>这里只谈谈OSX上面如何操作。</p>
+<p>首先要安装一个pip，是Python相关包的一个安装程序。安装方式网站上面并没有给出。我用port安装，找不到它。其实很简单，只需要</p>
+<pre><code>su<span class="operator"><span class="keyword">do</span> easy_install pip</code></pre>
+<p>即可。</p>
+<p>之后按照网站上面的方法，进入下载解压后的程序目录，执行：</p>
+<pre><code><span class="title">pip</span> install -r requirements.txt</code></pre>
+<p>这之后就可以使用了，首先在根目录下面建立一个~/.netrc文件，用于存储用户名和密码。</p>
+<pre><code>machine coursera-dl login <span class="tag">&lt;<span class="title">your-username</span>&gt;</span> password <span class="tag">&lt;<span class="title">your-password</span>&gt;</span></code></pre>
+<p>之后查看一下，数据库这门课的名字叫做db</p>
+<p>于是执行</p>
+<pre><code><span class="string">.</span><span class="comment">/coursera</span>-<span class="comment">dl</span> <span class="literal">-</span><span class="comment">n</span> <span class="comment">~/</span>.<span class="comment">netrc</span> <span class="comment">db</code></pre>
+<p>程序自动登录、列出目录结构，并且下载全部内容了。注意，需要科学上网。 :P</p>
+<h2>增量更新</h2>
+<p>有几个Coursera课程是同步的，现在还没有全部播放完毕，所以随时可以用coursera下载工具来进行更新：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="string">.</span><span class="comment">/coursera</span>-<span class="comment">dl</span> <span class="literal">-</span><span class="comment">n</span> <span class="comment">~/</span>.<span class="comment">netrc</span> <span class="comment">chinesehistory</span>-<span class="comment">001
+</pre></td></tr></table></figure>
+
+<p>这个课程是我到目前为止最喜欢的历史课。台湾大学吕世浩教授的《中国古代历史人物——秦始皇》。每周的课程大概6-8集，每集10分钟左右。我曾经打算每天看一集，这样看完一周的内容，刚好就有新的课程可以看了。但是，我没有一次能够忍住一口气看好几集。有时甚至周六一上午就看完本周全部内容，然后热切地期盼着下一个周六的到来。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-10-08T05:20:09.000Z"><a href="/2013/10/08/2013-10-08windowsinstallhexo/">Oct 8 2013</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/10/08/2013-10-08windowsinstallhexo/">在windows7上安装部署hexo</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1>安装git</h1>
+<p><a href="https://msysgit.googlecode.com/files/Git-1.8.4-preview20130916.exe" target="_blank">下载地址</a></p>
+<p>注意安装的时候，第一项命令行选项不要选择默认。应该选择第二个，即可以从windows窗口中调用git，否则后面会报错。</p>
+<h1>安装node.js</h1>
+<p><a href="http://nodejs.org/dist/v0.10.20/node-v0.10.20-x86.msi" target="_blank">下载地址</a></p>
+<p>我已经把这两个文件都存了下来，见常用工具文件夹。</p>
+<h1>运行vpn</h1>
+<p>如果不运行vpn，不仅速度会慢，而且还会中间报错。</p>
+<h1>执行安装命令</h1>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="title">npm</span> install -g hexo
+</pre></td></tr></table></figure>
+
+<p>一切正常的话，就可以安装部署完毕了。</p>
+<h1>平台间转换工作</h1>
+<p>我在mac上面已经搭建了一个blog，并且能够正确上传到github了。在windows下面我主要需要进行修改更新。这里需要注意。首先需要设置一个email让github认识你是谁。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="comment">git</span> <span class="comment">config</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">global</span> <span class="comment">user</span>.<span class="comment">email</span> <span class="comment">"my</span> <span class="comment">email</span> <span class="comment">for</span> <span class="comment">github</span> <span class="comment">account"
+</pre></td></tr></table></figure>
+
+<p>删掉.deploy目录</p>
+<p>之后再来执行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="title">hexo</span> deploy -g
+</pre></td></tr></table></figure>
+
+<p>目前在执行该的时候会提示输入github的用户名和密码。我正在学习如何改进这个步骤。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-10-07T12:29:25.000Z"><a href="/2013/10/07/2013-10-07nbconvert/">Oct 7 2013</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/10/07/2013-10-07nbconvert/">nbconvert的使用</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>ipython notebook很好用，但是只有安装了ipython环境的计算机才能打开并且浏览、操作ipynb格式的文件。科研流程需要发布共享给其他科研工作者，因此必须采用更为通用的格式。幸好，ipython提供了转换器nbconvert，可以将ipynb格式转换为html、latex和markdown等纯文本通用格式，以便使用不同类型、不同版本操作系统的读者都可以打开该文件，查看其内容，甚至拷贝其代码在本地运行。</p>
+<p>nbconvert的使用方法如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre>$ipython nbconvert --to html example.ipynb
+    [NbConvertApp] Using existing profile dir: <span class="string">u'/Users/Apple/.ipython/profile_default'</span>
+    [NbConvertApp] Converting notebook example.ipynb to html
+    [NbConvertApp] Support files will be <span class="keyword">in</span> example_files/
+    [NbConvertApp] Loaded template html_full.tpl
+    [NbConvertApp] Writing <span class="number">406527</span> bytes to example.html
+</pre></td></tr></table></figure>
+
+<p>获得的结果如图所示。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+
+  <nav id="pagination">
+  
+  
+    <a href="/archives/page/2/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/技术点滴/公益广告/">公益广告</a><small>1</small></li>
+  
+    <li><a href="/categories/技术点滴/">技术点滴</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/AWS/">AWS</a><small>1</small></li>
+  
+    <li><a href="/tags/Coursera/">Coursera</a><small>1</small></li>
+  
+    <li><a href="/tags/MOOC/">MOOC</a><small>1</small></li>
+  
+    <li><a href="/tags/blog/">blog</a><small>1</small></li>
+  
+    <li><a href="/tags/emacs/">emacs</a><small>1</small></li>
+  
+    <li><a href="/tags/github/">github</a><small>1</small></li>
+  
+    <li><a href="/tags/gmail/">gmail</a><small>1</small></li>
+  
+    <li><a href="/tags/gpg/">gpg</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>4</small></li>
+  
+    <li><a href="/tags/iPython/">iPython</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>2</small></li>
+  
+    <li><a href="/tags/lisp/">lisp</a><small>2</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>1</small></li>
+  
+    <li><a href="/tags/shadowsocks/">shadowsocks</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>2</small></li>
+  
+    <li><a href="/tags/windows/">windows</a><small>1</small></li>
+  
+    <li><a href="/tags/youku/">youku</a><small>1</small></li>
+  
+    <li><a href="/tags/作品/">作品</a><small>3</small></li>
+  
+    <li><a href="/tags/博客/">博客</a><small>1</small></li>
+  
+    <li><a href="/tags/尝试/">尝试</a><small>1</small></li>
+  
+    <li><a href="/tags/开放课程/">开放课程</a><small>1</small></li>
+  
+    <li><a href="/tags/技术点滴/">技术点滴</a><small>2</small></li>
+  
+    <li><a href="/tags/格式转换/">格式转换</a><small>1</small></li>
+  
+    <li><a href="/tags/科研/">科研</a><small>1</small></li>
+  
+    <li><a href="/tags/科研流程/">科研流程</a><small>1</small></li>
+  
+    <li><a href="/tags/评论/">评论</a><small>1</small></li>
+  
+    <li><a href="/tags/问题解决/">问题解决</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 Wang Shuyi
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

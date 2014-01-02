@@ -1,0 +1,234 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>AWS上部署shadowsocks | 大树小屋技术版</title>
+  <meta name="author" content="Wang Shuyi">
+  
+  <meta name="description" content="试了一个晚上，打算在AWS上面建一个vpn，可惜台湾同胞2011年的一键教程似乎对ubuntu 12.04并不奏效（当时他用的还是10.10）。一直到后面编译报错。没办法，尝试另一条路径——AWS上面部署shadowsocks。
+现在用的是日本数据中心，回头可以试试新加坡的。反正用的都是ubuntu">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="AWS上部署shadowsocks"/>
+  <meta property="og:site_name" content="大树小屋技术版"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="大树小屋技术版" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">大树小屋技术版</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-01-02T13:20:07.000Z"><a href="/2014/01/02/20140102shadowsocksonawsjapan/">Jan 2 2014</a></time>
+      
+      
+  
+    <h1 class="title">AWS上部署shadowsocks</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>试了一个晚上，打算在AWS上面建一个vpn，可惜台湾同胞2011年的一键教程似乎对ubuntu 12.04并不奏效（当时他用的还是10.10）。一直到后面编译报错。没办法，尝试另一条路径——AWS上面部署shadowsocks。</p>
+<p>现在用的是日本数据中心，回头可以试试新加坡的。反正用的都是ubuntu，有啥不同？</p>
+<p>还是参考 <a href="https://github.com/clowwindy/shadowsocks/wiki/Shadowsocks-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E" target="_blank">https://github.com/clowwindy/shadowsocks/wiki/Shadowsocks-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E</a></p>
+<p>首先</p>
+<pre><code><span class="comment">python</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">version</code></pre>
+<p>2.7.3，没问题。</p>
+<pre><code><span class="title">sudo</span> apt-get install python-pip
+<span class="title">sudo</span> pip install shadowsocks
+<span class="title">vi</span> config.json</code></pre>
+<p>config.json 里面 server 一项，必须使用 Public DNS， 那个 Public IP 无效。</p>
+<pre><code>{
+    "<span class="attribute">server</span>":<span class="value"><span class="string">"(mypublicDNS)"</span></span>,
+    "<span class="attribute">server_port</span>":<span class="value"><span class="number">8388</span></span>,
+    "<span class="attribute">local_port</span>":<span class="value"><span class="number">1080</span></span>,
+    "<span class="attribute">password</span>":<span class="value"><span class="string">"(mypassword)"</span></span>,
+    "<span class="attribute">timeout</span>":<span class="value"><span class="number">600</span></span>,
+    "<span class="attribute">method</span>":<span class="value"><span class="string">"aes-256-cfb"</span>
+}</span></code></pre>
+<p>然后执行</p>
+<pre><code>su<span class="operator"><span class="keyword">do</span> apt-<span class="keyword">get</span> install python-m2crypto
+sudo apt-<span class="keyword">get</span> install python-gevent
+nohup ssserver &gt; log &amp;</code></pre>
+<p>注意还需要修改 Security Group 里面对应的端口</p>
+<p>因为我用的是8388， 这种socks端口我分不清是 TCP 还是 UDP，干脆全部都打开，而且加上出、入，反正一共写了4个 8388</p>
+<p>本机上设置config.json，依然注意server用public dns，不要用IP.</p>
+<p>ok，尽情享受日本AWS机房带来的快速和便捷吧！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/shadowsocks/">shadowsocks</a>, <a href="/tags/AWS/">AWS</a>, <a href="/tags/ubuntu/">ubuntu</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/技术点滴/公益广告/">公益广告</a><small>1</small></li>
+  
+    <li><a href="/categories/技术点滴/">技术点滴</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/AWS/">AWS</a><small>1</small></li>
+  
+    <li><a href="/tags/Coursera/">Coursera</a><small>1</small></li>
+  
+    <li><a href="/tags/MOOC/">MOOC</a><small>1</small></li>
+  
+    <li><a href="/tags/blog/">blog</a><small>1</small></li>
+  
+    <li><a href="/tags/emacs/">emacs</a><small>1</small></li>
+  
+    <li><a href="/tags/github/">github</a><small>1</small></li>
+  
+    <li><a href="/tags/gmail/">gmail</a><small>1</small></li>
+  
+    <li><a href="/tags/gpg/">gpg</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>4</small></li>
+  
+    <li><a href="/tags/iPython/">iPython</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>2</small></li>
+  
+    <li><a href="/tags/lisp/">lisp</a><small>2</small></li>
+  
+    <li><a href="/tags/python/">python</a><small>1</small></li>
+  
+    <li><a href="/tags/shadowsocks/">shadowsocks</a><small>1</small></li>
+  
+    <li><a href="/tags/ubuntu/">ubuntu</a><small>2</small></li>
+  
+    <li><a href="/tags/windows/">windows</a><small>1</small></li>
+  
+    <li><a href="/tags/youku/">youku</a><small>1</small></li>
+  
+    <li><a href="/tags/作品/">作品</a><small>3</small></li>
+  
+    <li><a href="/tags/博客/">博客</a><small>1</small></li>
+  
+    <li><a href="/tags/尝试/">尝试</a><small>1</small></li>
+  
+    <li><a href="/tags/开放课程/">开放课程</a><small>1</small></li>
+  
+    <li><a href="/tags/技术点滴/">技术点滴</a><small>2</small></li>
+  
+    <li><a href="/tags/格式转换/">格式转换</a><small>1</small></li>
+  
+    <li><a href="/tags/科研/">科研</a><small>1</small></li>
+  
+    <li><a href="/tags/科研流程/">科研流程</a><small>1</small></li>
+  
+    <li><a href="/tags/评论/">评论</a><small>1</small></li>
+  
+    <li><a href="/tags/问题解决/">问题解决</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 Wang Shuyi
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
