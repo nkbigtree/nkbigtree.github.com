@@ -48,6 +48,50 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-05-03T06:14:15.000Z"><a href="/2014/05/03/graphvizchinesewindows/">May 3 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/05/03/graphvizchinesewindows/">Windows下Graphviz中文乱码解决</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>其实Graphviz本来处理中文就有问题。我存了一个utf8文件(mac下面默认编码），然后到windows下面用Graphviz打开，就乱码。</p>
+<p>我把编码改成了gbk，这下windows下面gvedit里面看到的是正确的中文，可是生成的png里面所有中文都是方块乱码。</p>
+<p>我上网查了一下，这个<a href="http://blog.csdn.net/xiajian2010/article/details/23748557" target="_blank">教程</a>很不错。里面提到首先编码就应该是utf8，然后文中应该加上：</p>
+<pre><code><span class="title">edge</span> [fontname=<span class="string">"FangSong"</span>];
+    <span class="title">node</span> [shape=box, fontname=<span class="string">"FangSong"</span>];</code></pre>
+<p>我加了，但是还是有的中文能出来，有的出不来。于是我发觉应该再加上一句：</p>
+<pre><code><span class="setting">graph[fontname=<span class="value"><span class="string">"FangSong"</span>];</span></span></code></pre>
+<p>这下，子图的标题也都是中文正确显示了。可是子图里面的节点却依然是空（不是乱码，只是没有内容）。于是我查找半天，最终发现罪魁祸首是：</p>
+<pre><code>zongshu_title [<span class="keyword">label</span> = <span class="string">"研究综述"</span> shape=<span class="keyword">record</span>]</code></pre>
+<p>看到了吧？就是最后这句shape=record。为什么有问题？不知道。但是把它删去，一点不改变原先的图形结构，中文却又都出来了。</p>
+<p>当然，gvedit是无论如何不能用了。应该使用的是命令行方式，为：</p>
+<pre><code>C:<span class="command">\Users</span><span class="command">\Administrator</span>&gt;"c:<span class="command">\Program</span> Files<span class="command">\Graphviz</span>2.38<span class="command">\bin</span><span class="command">\dot</span>.exe" d:<span class="command">\researchPlanSimpleOfficialUTF</span>8.gv -Tpng -o d:<span class="command">\researchPlan</span>.png</code></pre>
+<p>好了，这样可以在windows下面正确编译出graphviz文件了。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-01-02T13:20:07.000Z"><a href="/2014/01/02/20140102shadowsocksonawsjapan/">Jan 2 2014</a></time>
       
       
@@ -168,6 +212,7 @@ ssh-keygen -t rsa -C <span class="string">'myaccount1<span class="variable">@gma
 <h2>后续工作</h2>
 <p>这样做有个问题，就是占用了许多免费资源。我也怕 Google 会因为长期不活跃登录，收走我的邮箱账号。虽然我觉得大公司不至于如此小气。以防万一吧。</p>
 <p>到 gmail 中，设置 -&gt; 转发。 把所有的邮件转发到自己的主邮件去。 这样一来时常会有操作。而来即便Google要收账号，肯定也得通知。可以第一时间获知，采取对策。</p>
+<p>还有，别忘了验证 github 邮件。这个确实很容易遗忘，呵呵。github会提醒你的。</p>
 
       
     </div>
@@ -517,54 +562,6 @@ x = <span class="transposed_variable">np.</span><span class="built_in">linspace<
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2013-10-07T12:29:25.000Z"><a href="/2013/10/07/2013-10-07nbconvert/">Oct 7 2013</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2013/10/07/2013-10-07nbconvert/">nbconvert的使用</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>ipython notebook很好用，但是只有安装了ipython环境的计算机才能打开并且浏览、操作ipynb格式的文件。科研流程需要发布共享给其他科研工作者，因此必须采用更为通用的格式。幸好，ipython提供了转换器nbconvert，可以将ipynb格式转换为html、latex和markdown等纯文本通用格式，以便使用不同类型、不同版本操作系统的读者都可以打开该文件，查看其内容，甚至拷贝其代码在本地运行。</p>
-<p>nbconvert的使用方法如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-</pre></td><td class="code"><pre>$ipython nbconvert --to html example.ipynb
-    [NbConvertApp] Using existing profile dir: <span class="string">u'/Users/Apple/.ipython/profile_default'</span>
-    [NbConvertApp] Converting notebook example.ipynb to html
-    [NbConvertApp] Support files will be <span class="keyword">in</span> example_files/
-    [NbConvertApp] Loaded template html_full.tpl
-    [NbConvertApp] Writing <span class="number">406527</span> bytes to example.html
-</pre></td></tr></table></figure>
-
-<p>获得的结果如图所示。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
 
 <nav id="pagination">
   
@@ -607,6 +604,8 @@ x = <span class="transposed_variable">np.</span><span class="built_in">linspace<
   
     <li><a href="/tags/blog/">blog</a><small>1</small></li>
   
+    <li><a href="/tags/codec/">codec</a><small>1</small></li>
+  
     <li><a href="/tags/emacs/">emacs</a><small>1</small></li>
   
     <li><a href="/tags/github/">github</a><small>1</small></li>
@@ -614,6 +613,8 @@ x = <span class="transposed_variable">np.</span><span class="built_in">linspace<
     <li><a href="/tags/gmail/">gmail</a><small>1</small></li>
   
     <li><a href="/tags/gpg/">gpg</a><small>1</small></li>
+  
+    <li><a href="/tags/graphviz/">graphviz</a><small>1</small></li>
   
     <li><a href="/tags/hexo/">hexo</a><small>4</small></li>
   
@@ -627,11 +628,17 @@ x = <span class="transposed_variable">np.</span><span class="built_in">linspace<
   
     <li><a href="/tags/shadowsocks/">shadowsocks</a><small>1</small></li>
   
+    <li><a href="/tags/tech/">tech</a><small>1</small></li>
+  
     <li><a href="/tags/ubuntu/">ubuntu</a><small>2</small></li>
   
     <li><a href="/tags/windows/">windows</a><small>1</small></li>
   
     <li><a href="/tags/youku/">youku</a><small>1</small></li>
+  
+    <li><a href="/tags/中文/">中文</a><small>1</small></li>
+  
+    <li><a href="/tags/乱码/">乱码</a><small>1</small></li>
   
     <li><a href="/tags/作品/">作品</a><small>3</small></li>
   
